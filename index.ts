@@ -1,5 +1,4 @@
 import express from "express"
-import ejs, { Data, name } from "ejs"
 import {Standings, Teams, Match, Flags} from "./interfaces"
 
 const app = express();
