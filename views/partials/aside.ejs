@@ -1,0 +1,31 @@
+<aside>
+    <nav id="aside_nav">
+        <a href="main?league=BSA"><img src="https://crests.football-data.org/764.svg" alt="Brazil"> Serie A</a>
+        <a href="main?league=PL"><img src="https://crests.football-data.org/770.svg" alt="England"> Premier League</a> 
+        <a href="main?league=FL1"><img src="https://crests.football-data.org/773.svg" alt="France"> Ligue 1</a>
+        <a href="main?league=BL1"><img src="https://crests.football-data.org/759.svg" alt="Germany"> Bundesliga</a>
+        <a href="main?league=SA"><img src="https://crests.football-data.org/784.svg" alt="Italy"> Serie A</a>
+        <a href="main?league=DED"><img src="https://crests.football-data.org/8601.svg" alt="Netherlands"> Eredivisie</a>
+        <a href="main?league=PPL"><img src="https://crests.football-data.org/765.svg" alt="Portugal"> Primeira Liga</a>
+        <a href="main?league=PD"><img src="https://crests.football-data.org/760.svg" alt="Spain"> La Liga</a>
+    </nav>
+    <form action="/aside_chekbox" method="post">
+        <input type="checkbox" name="league" value="PL">
+        <label for="">England Premier League</label> <br>
+        <input type="checkbox" name="league" value="DED">
+        <label for="">Netherlands Eredivisie</label> <br>
+        <input type="checkbox" name="league" value="BL1">
+        <label for="">Germany Bundesliga</label> <br>
+        <input type="checkbox" name="league" value="SA">
+        <label for="">Italy Serie A</label> <br>   
+        <input type="checkbox" name="league" value="FL1">
+        <label for="">France Ligue 1</label> <br>
+        <input type="checkbox" name="league" value="BSA">
+        <label for="">Brazil Serie A</label> <br>
+        <input type="checkbox" name="league" value="PD">
+        <label for="">Spain La Liga</label> <br>
+        <input type="checkbox" name="league" value="PPL">
+        <label for="">Portugal Primeira Liga</label> <br>  
+        <button type="submit">sent</button>
+    </form>
+</aside>

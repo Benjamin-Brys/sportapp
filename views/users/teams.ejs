@@ -1,0 +1,26 @@
+<%- include("../partials/header") %>
+<main>
+    <form action="teams" method="get" class="form1">
+        <select name="team" id="team">
+            <option value="DED">Eredivisie</option>
+            <option value="PL">Premier League</option>
+            <option value="BL1">Bundesliga</option>
+            <option value="SA">Serie A</option>
+            <option value="FL1">Ligue 1</option>
+            <option value="BSA">Brasileirão</option>
+            <option value="PD">La Liga</option>
+            <option value="PPL">Primeira Liga</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+    <ol class="teams_ol">
+        <% teams.forEach(item => { %>
+            <li class="teams_li">
+                <h2><%= item.name %></h2>
+                <img src="<%= item.crest %>" alt="<%= item.name %>">
+            </li>
+        <% }); %>
+    </ol>
+</main>
+<%- include("../partials/aside") %>
+<%- include("../partials/footer") %>

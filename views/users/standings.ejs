@@ -1,0 +1,55 @@
+<%- include("../partials/header") %>
+<main>
+    <form action="standings" method="get" class="form1">
+        <select name="year" id="year">
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+        </select>
+        <select name="league" id="league">
+            <option value="PL">Premier league</option>
+            <option value="DED">Eerdivisie</option>
+            <option value="BL1">Bundesliga</option>
+            <option value="SA">Serie A</option>
+            <option value="PPL">Primeira Liga</option>
+            <option value="FL1">Ligue 1</option>
+            <option value="BSA">Brazil</option>
+            <option value="PD">Série A</option>
+        </select>
+        <button type="submit">Search</button>
+    </form>
+    <ol class="standings_ol">
+        <li class="standings_li1">#</li>
+        <li class="standings_li1"></li>
+        <li class="standings_li2">TEAM</li>   
+        <li class="standings_li1">G</li>
+        <li class="standings_li1">W</li>
+        <li class="standings_li1">D</li>
+        <li class="standings_li1">L</li>
+        <li class="standings_li1">P</li>
+        <li class="standings_li1">G+</li>
+        <li class="standings_li1">G-</li>
+        <li class="standings_li1">G/</li>
+        <li class="standings_li3">FORM</li>
+    </ol>
+    <ol class="standings_ol">
+        <% standings.forEach(item => { %>
+            <li class="standings_li1"><%= item.position %></li>
+            <li class="standings_li1"><img src="<%= item.team.crest %>" alt="<%= item.team.name %>" class="standings_img"></li>
+            <li class="standings_li2"><%= item.team.name %></li>
+            <li class="standings_li1"><%= item.playedGames %></li>
+            <li class="standings_li1"><%= item.won %></li>
+            <li class="standings_li1"><%= item.draw %></li>
+            <li class="standings_li1"><%= item.lost %></li>
+            <li class="standings_li1"><%= item.points %></li>
+            <li class="standings_li1"><%= item.goalsFor %></li>
+            <li class="standings_li1"><%= item.goalsAgainst %></li>
+            <li class="standings_li1"><%= item.goalDifference %></li>
+            <li class="standings_li3"><%= item.form %></li>
+        <% }); %>
+    </ol> <br> <br>
+</main>
+<%- include("../partials/aside") %>
+<%- include("../partials/footer") %>

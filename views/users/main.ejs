@@ -1,0 +1,74 @@
+<%- include("../partials/header") %>
+<main>
+    <h1>Epic stats</h1>
+    <ul>
+        <% if (matches.length === 0) { %>
+            <p>No aniveable matches</p>
+            <li id="main_li1">
+                <img src="https://crests.football-data.org/770.svg" alt="England" class="main_img">Premier League   
+                <img src="https://crests.football-data.org/PL.png" alt="Premier League" class="main_img">
+            </li>
+            <li id="main_li2">
+                01-01-2024 20:00:00 Scheduled <br>
+            </li>
+            <li id="main_li3">
+                <img src="https://crests.football-data.org/65.png" alt="Man City" class="main_img"> 
+                Man City 0 - 0 Liverpool 
+                <img src="https://crests.football-data.org/64.png" alt="Liverpool" class="main_img"> <br> <br>
+            </li>
+            <li id="main_li1">
+                <img src="https://crests.football-data.org/770.svg" alt="England" class="main_img"> Premier League     
+                <img src="https://crests.football-data.org/PL.png" alt="Premier League" class="main_img">
+            </li>
+            <li id="main_li2">
+                01-01-2024 20:00:00<br>
+            </li>
+            <li id="main_li3">
+                <img src="https://crests.football-data.org/61.png" alt="Chelsea" class="main_img"> 
+                Chelsea 0 - 0 Tottenham Hotspur FC
+                <img src="https://crests.football-data.org/73.png" alt="Tottenham Hotspur FC" class="main_img"> <br> <br>
+            </li>
+        <% } else { %>
+            <!-- Real matches -->
+            <% let competition = ""; %>
+            <% let lastdate = ""; %>
+            <% matches.forEach(item => { %>
+
+            <% if (item.competition.name !== competition) { %>
+                <li id="main_li1">
+                    <img src="<%= item.area.flag %>" alt="<%= item.area.name %>" class="main_img1"> 
+                    <%= item.area.name %> - <%= item.competition.name %> 
+                    <img src="<%= item.competition.emblem %>" alt="<%= item.competition.name %>" class="main_img1">
+                </li>
+                <% competition = item.competition.name %>
+            <% } %>
+
+            <% if (new Date(item.utcDate).toLocaleDateString() !== lastdate) { %>                
+                <li id="main_li2">
+                    <%= new Date(item.utcDate).toLocaleDateString() %> <br>
+                </li>
+                <% lastdate = new Date(item.utcDate).toLocaleDateString() %>
+            <% } %>
+
+                <li id="main_li3">
+                    <div id="time"> <%= new Date(item.utcDate).toLocaleTimeString() %> </div>
+                     
+                    <div id="main_name1"> <%= item.homeTeam.name %> </div>
+                    <img src="<%= item.homeTeam.crest %>" alt="<%= item.homeTeam.name %>" class="main_img2">
+
+                    <% if (item.score.fullTime.home !== null && item.score.fullTime.away !== null) { %>
+                        <div class="main_score"> <%= item.score.fullTime.home %> - <%= item.score.fullTime.away %> </div>
+                    <% } else { %>
+                        <div class="main-score"> - </div> 
+                    <% } %>
+
+                    <img src="<%= item.awayTeam.crest %>" alt="<%= item.awayTeam.name %>" class="main_img3">
+                    <div id="main_name2"> <%= item.awayTeam.name %> </div>
+                    <div id="empty"></div>
+                </li>
+            <% }); %>
+        <% } %>
+    </ul> <br> <br>
+</main>
+<%- include("../partials/aside") %>
+<%- include("../partials/footer") %>
