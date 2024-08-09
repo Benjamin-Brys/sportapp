@@ -1,6 +1,6 @@
-import express, { Express, response, NextFunction } from 'express';
+import express, { request, response, NextFunction } from 'express';
 import path from "path";
-import {Standings, Teams, Match, Flags} from "./interfaces"
+import {Standings, Teams, Match} from "./interfaces"
 
 
 const app = express();
