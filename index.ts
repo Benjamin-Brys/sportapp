@@ -1,14 +1,20 @@
-import express from "express"
+import express, { Express, response, NextFunction } from 'express';
+import path from "path";
 import {Standings, Teams, Match, Flags} from "./interfaces"
+
 
 const app = express();
 
 app.set("view engine", "ejs")
 app.set("port", 3000)
+app.set('views', path.join(__dirname, 'views'));
 
-app.use(express.static("public"))
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended:true}))
+
+
+
 
 app.get("/", async(req, res) => {
     const matches = await fetchMatches();
