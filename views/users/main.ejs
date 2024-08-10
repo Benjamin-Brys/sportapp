@@ -12,9 +12,9 @@
                 01-01-2024 20:00:00 Scheduled <br>
             </li>
             <li id="main_li3">
-                <img src="https://crests.football-data.org/65.png" alt="Man City" class="main_img"> 
+                <img src="https://crests.football-data.org/65.png" alt="Man City" class="main_img2"> 
                 Man City 0 - 0 Liverpool 
-                <img src="https://crests.football-data.org/64.png" alt="Liverpool" class="main_img"> <br> <br>
+                <img src="https://crests.football-data.org/64.png" alt="Liverpool" class="main_img3"> <br> <br>
             </li>
             <li id="main_li1">
                 <img src="https://crests.football-data.org/770.svg" alt="England" class="main_img"> Premier League     
@@ -24,9 +24,9 @@
                 01-01-2024 20:00:00<br>
             </li>
             <li id="main_li3">
-                <img src="https://crests.football-data.org/61.png" alt="Chelsea" class="main_img"> 
+                <img src="https://crests.football-data.org/61.png" alt="Chelsea" class="main_img2"> 
                 Chelsea 0 - 0 Tottenham Hotspur FC
-                <img src="https://crests.football-data.org/73.png" alt="Tottenham Hotspur FC" class="main_img"> <br> <br>
+                <img src="https://crests.football-data.org/73.png" alt="Tottenham Hotspur FC" class="main_img3"> <br> <br>
             </li>
         <% } else { %>
             <!-- Real matches -->
@@ -51,8 +51,9 @@
             <% } %>
 
                 <li id="main_li3">
-                    <div id="time"> <%= new Date(item.utcDate).toLocaleTimeString() %> </div>
+                    <div id="time"> <%= new Date(item.utcDate).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) %></div>
                      
+                    <div class="main_name3"><%= item.homeTeam.shortName %></div>
                     <div id="main_name1"> <%= item.homeTeam.name %> </div>
                     <img src="<%= item.homeTeam.crest %>" alt="<%= item.homeTeam.name %>" class="main_img2">
 
@@ -64,7 +65,7 @@
 
                     <img src="<%= item.awayTeam.crest %>" alt="<%= item.awayTeam.name %>" class="main_img3">
                     <div id="main_name2"> <%= item.awayTeam.name %> </div>
-                    <div id="empty"></div>
+                    <div class="main_name3"><%= item.awayTeam.shortName %></div>
                 </li>
             <% }); %>
         <% } %>

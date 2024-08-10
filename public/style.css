@@ -1,3 +1,5 @@
+@import url('https://cdn-uicons.flaticon.com/2.5.1/uicons-regular-straight/css/uicons-regular-straight.css');
+
 /*Project*/
 :root {
     --color1: rgb(0, 120, 255);
@@ -27,6 +29,14 @@ a {
 h1, P {
     text-align: center;
 }
+h1 {
+    width: 200px;
+    border: 5px solid;
+    background: linear-gradient(45deg, blue, red);
+    border-image-slice: 1;
+    margin: 30PX auto;
+    border-radius: 10px;
+}
 
 
 /*Aside*/
@@ -50,7 +60,7 @@ aside a {
     box-shadow: 0 0 12px rgb(0, 0, 0);
     transition: background-color 0.3s, color 0.3s, transform 0.25s;
 }
-nav a:hover {
+aside a:hover {
     background-color: var(--color1);
     color: white;
     transform: scale(1.05);
@@ -87,12 +97,19 @@ header {
     color: #007BFF;
     transform: scale(1.1);
 }
-#header_nav {
+header nav {
     margin-right: 100px;
     display: flex;
     align-items: center;
     gap: 50px;
     letter-spacing: 5px;
+}
+header nav a {
+    color: var(--color2);
+    font-size: 18px;
+}
+header nav a:hover {
+    text-decoration: 3px underline var(--color3);
 }
 
 
@@ -114,6 +131,7 @@ main ul {
 .main_img1 {
     height: 40px;
     width: 40px;
+    margin: 0 15px;
 }
 .main_img2, .main_img3 {
     height: 30px;
@@ -150,6 +168,9 @@ main ul {
 #main_name2 {
     display: flex;
     justify-content: flex-start;
+}
+.main_name3 {
+    display: none;
 }
 
 /*teams*/
@@ -254,10 +275,29 @@ button:hover {
         "header"
         "main"
         "footer";
-        grid-template-columns: auto;
+        grid-template-columns: 95vw;
         grid-template-rows: 100px auto 100px;
     }
     aside {
         display: none;
+    }
+    main ul {
+        width: 90%;
+    }
+}
+@media (max-width: 720px) {
+    #main_name1, #main_name2 {
+        display: none;
+    }
+    .main_name3 {
+        display: initial;
+
+    }
+    .main_score {
+        width: 40px;
+    }
+    header nav {
+        margin-right: 20px;
+        gap: 20px;
     }
 }
