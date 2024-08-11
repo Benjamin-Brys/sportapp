@@ -269,20 +269,22 @@ button:hover {
 
 
 /*media querys*/
-@media (max-width: 1024px) {
+@media (max-width: 1024px) {    
     body {
         grid-template-areas: 
         "header"
         "main"
-        "footer";
+        "aside"
+        "footer"; 
         grid-template-columns: 95vw;
-        grid-template-rows: 100px auto 100px;
-    }
-    aside {
-        display: none;
+        grid-template-rows: 100px auto 700px 100px;
     }
     main ul {
         width: 90%;
+    }
+    aside nav {
+      width: 75%;
+      margin: 0 auto;
     }
 }
 @media (max-width: 720px) {
