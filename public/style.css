@@ -111,6 +111,9 @@ header nav a {
 header nav a:hover {
     text-decoration: 3px underline var(--color3);
 }
+header img {
+    
+}
 
 
 /*main*/
@@ -278,13 +281,33 @@ button:hover {
         "footer"; 
         grid-template-columns: 95vw;
         grid-template-rows: 100px auto 700px 100px;
+        margin-left: 0;
     }
     main ul {
         width: 90%;
     }
+    aside, header, footer, main, body, html {
+        width: 95vw;
+        margin-left: 10px;
+    }
     aside nav {
-      width: 75%;
-      margin: 0 auto;
+        width: 90%;
+      }
+
+    ::-webkit-scrollbar {
+        width: initial; /* Terug naar standaardbreedte */
+    }
+    ::-webkit-scrollbar-track {
+        background-color: initial; /* Terug naar standaard achtergrondkleur */
+    }
+    ::-webkit-scrollbar-thumb {
+        background-image: none; /* Geen aangepaste achtergrond */
+    }
+    @-moz-document url-prefix() {
+        html {
+            scrollbar-width: initial; /* Terug naar standaard breedte */
+            scrollbar-color: initial; /* Terug naar standaard kleuren */
+        }
     }
 }
 @media (max-width: 720px) {

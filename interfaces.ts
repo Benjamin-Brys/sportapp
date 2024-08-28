@@ -1,3 +1,5 @@
+import { ObjectId } from "mongodb";
+
 export interface Flags {
     crest: string
 }
@@ -64,7 +66,6 @@ export interface Score {
     };
 }
 export interface Match {
-    
     area: Area;
     competition: Competition;
     season: Season;
@@ -82,4 +83,13 @@ export interface Match {
         msg: string;
     };
     referees: Array<any>;
+}
+
+export interface Areas {
+    _id?: ObjectId;
+    name: string;
+    countryCode: string;
+    flag: string;
+    parentAreaId: number;
+    parentArea: string;
 }

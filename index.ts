@@ -1,7 +1,11 @@
 import express, { request, response, NextFunction } from 'express';
 import path from "path";
+import dotenv from "dotenv";
 import {Standings, Teams, Match} from "./interfaces"
+import { connect } from "./database";
+import chalk from 'chalk';
 
+dotenv.config()
 
 const app = express();
 
@@ -18,54 +22,45 @@ app.use(express.urlencoded({ extended:true}))
 
 app.get("/", async(req, res) => {
     const matches = await fetchMatches();
+    console.log(matches)
     res.render("users/main", {matches})
 });
-
 app.post("/aside_chekbox", async(req, res) => {
     const favorite = req.body.league
     console.log(favorite)
     const matches = await fetchMatchesLeague(favorite);
     res.render("users/main", {matches})
 })
-
 app.get("/main", async(req,res) => {
     const league = req.query.league;
     const matches = await fetchMatchesLeague(league)
     res.render("users/main", {matches})
 })
-
-
-
-
-
 app.get("/teams", async (req, res) => {
     const team = req.query.team;
     const teams = await fetchTeams(team);
     res.render("users/teams", {teams})
 });
-
 app.get("/teamsPage", async (req, res) => {
     const team = "PL"
     const teams = await fetchTeams(team);
     res.render("users/teams", {teams})
 });
-
 app.get("/standings", async (req, res) => {
     const {year, league} = req.query;
     const standings = await fetchStanding(year, league);
     res.render("users/standings", {standings, league, year})
 });
-
 app.get("/StandingsPage", async (req, res) => {
     const league = "PL";
     const year = "2023";
     const standings = await fetchStanding(year, league);
     res.render("users/standings", {standings, year})
 })
-
-app.listen(app.get("port"), () => 
-    console.log("http://localhost:" + app.get("port"))
-);
+app.listen(app.get("port"), async() => { 
+    await connect();
+    console.log(chalk.cyan("http://localhost:" + app.get("port")))
+});
 
 
 
@@ -127,15 +122,31 @@ async function fetchMatches() {
         const date = new Date();
 
         let year: number | string = date.getFullYear();
-        let month: number | string = date.getMonth() +1;
-        let day: number | string = date.getDate() -3;
+        let month: number | string = date.getMonth() + 1;
 
-        if (month < 10) {month = `0${month}`};
-        if (day < 10) {day = `0${day}`};
+        const pastDate = new Date(date);
+        pastDate.setDate(date.getDate() - 3);
 
-        const date1: string = `${year}-${month}-${day}`
-        day = date.getDate() +7;
-        const date2: string = `${year}-${month}-${day}`
+        const futureDate = new Date(date);
+        futureDate.setDate(date.getDate() + 7);
+
+        year = pastDate.getFullYear();
+        month = pastDate.getMonth() + 1;
+        let day: number | string = pastDate.getDate();
+
+        if (month < 10) month = `0${month}`;
+        if (day < 10) day = `0${day}`;
+
+        const date1: string = `${year}-${month}-${day}`;
+
+        year = futureDate.getFullYear();
+        month = futureDate.getMonth() + 1;
+        day = futureDate.getDate();
+
+        if (month < 10) month = `0${month}`;
+        if (day < 10) day = `0${day}`;
+
+        const date2: string = `${year}-${month}-${day}`;
 
         const result = await fetch(`https://api.football-data.org/v4/matches?dateFrom=${date1}&dateTo=${date2}`, { 
             headers: {'X-Auth-Token': '0a57c6f9ba31492383865d39d1c3c602' }
@@ -146,6 +157,8 @@ async function fetchMatches() {
         }
 
         const data = await result.json()
+
+        console.log(data)
 
         const matches: Match[] = data.matches.map((match: any) => ({
             area: {
@@ -208,7 +221,7 @@ async function fetchMatches() {
         return matches;
 
     } catch (error) {
-        console.error('Error fetching matches');
+        console.error(chalk.red('Fetch fail =>', error));
     }
 }
 async function fetchMatchesLeague(favorite: any) {
@@ -302,3 +315,89 @@ async function fetchMatchesLeague(favorite: any) {
         console.error('Error fetching matches');
     }
 }
+/*
+
+matches:
+
+    "area": {
+        "id": 2220,
+        "name": "South America",
+        "code": "SAM",
+        "flag": "https://crests.football-data.org/CLI.svg"
+    },
+    "competition": {
+        "id": 2152,
+        "name": "Copa Libertadores",
+        "code": "CLI",
+        "type": "CUP",
+        "emblem": "https://crests.football-data.org/CLI.svg"
+    },
+    "season": {
+        "id": 1644,
+        "startDate": "2024-02-07",
+        "endDate": "2024-08-23",
+        "currentMatchday": 6,
+        "winner": null
+    },
+            "id": 517545,
+            "utcDate": "2024-08-21T00:30:00Z",
+            "status": "FINISHED",
+            "matchday": 2,
+            "stage": "LAST_16",
+            "group": null,
+            "lastUpdated": "2024-08-21T04:25:58Z",
+            "homeTeam": {
+                "id": 4439,
+                "name": "CDP Junior FC",
+                "shortName": "Junior",
+                "tla": "ATL",
+                "crest": "https://crests.football-data.org/4439.png"
+            },
+            "awayTeam": {
+                "id": 4410,
+                "name": "CSD Colo-Colo",
+                "shortName": "Colo-Colo",
+                "tla": "COL",
+                "crest": "https://crests.football-data.org/4410.png"
+            },
+            "score": {
+                "winner": "AWAY_TEAM",
+                "duration": "REGULAR",
+                "fullTime": {
+                    "home": 1,
+                    "away": 2
+                },
+                "halfTime": {
+                    "home": 1,
+                    "away": 1
+                }
+            },
+            "odds": {
+                "msg": "Activate Odds-Package in User-Panel to retrieve odds."
+            },
+            "referees": []    
+
+competitions":
+
+    "id": 2013,
+    "area": {
+        "id": 2032,
+        "name": "Brazil",
+        "code": "BRA",
+        "flag": "https://crests.football-data.org/764.svg"
+    },
+    "name": "Campeonato Brasileiro Série A",
+    "code": "BSA",
+    "type": "LEAGUE",
+    "emblem": "https://crests.football-data.org/bsa.png",
+    "plan": "TIER_ONE",
+    "currentSeason": {
+        "id": 2257,
+        "startDate": "2024-04-13",
+        "endDate": "2024-12-08",
+        "currentMatchday": 23,
+        "winner": null
+    },
+    "numberOfAvailableSeasons": 8,
+    "lastUpdated": "2024-05-08T14:08:14Z"     
+*/
