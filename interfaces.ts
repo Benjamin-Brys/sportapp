@@ -1,13 +1,12 @@
 import { ObjectId } from "mongodb";
 
-export interface Flags {
-    crest: string
-}
-
 export interface Teams {
     name: string;
     crest: string;
 }
+
+
+
 export interface Standings {
     position: number,
     team: {
@@ -24,6 +23,33 @@ export interface Standings {
     goalsAgainst: number,
     goalDifference: number
 };
+export interface Team {
+    id: number;
+    name: string;
+    shortName: string;
+    tla: string;
+    crest: string;
+}
+export interface Match {
+    area: Area;
+    competition: Competition;
+    season: Season;
+    id: number;
+    utcDate: string;
+    status: string;
+    matchday: number;
+    stage: string;
+    group: null | string;
+    lastUpdated: string;
+    homeTeam: Team;
+    awayTeam: Team;
+    score: Score;
+    odds: {
+        msg: string;
+    };
+    referees: Array<any>;
+}
+
 
 
 export interface Area {
@@ -46,13 +72,9 @@ export interface Season {
     currentMatchday: number;
     winner: null | string;
 }
-export interface Team {
-    id: number;
-    name: string;
-    shortName: string;
-    tla: string;
-    crest: string;
-}
+
+
+
 export interface Score {
     winner: null | string;
     duration: string;
@@ -65,26 +87,6 @@ export interface Score {
         away: null | number;
     };
 }
-export interface Match {
-    area: Area;
-    competition: Competition;
-    season: Season;
-    id: number;
-    utcDate: string;
-    status: string;
-    matchday: number;
-    stage: string;
-    group: null | string;
-    lastUpdated: string;
-    homeTeam: Team;
-    awayTeam: Team;
-    score: Score;
-    odds: {
-        msg: string;
-    };
-    referees: Array<any>;
-}
-
 export interface Areas {
     _id?: ObjectId;
     name: string;

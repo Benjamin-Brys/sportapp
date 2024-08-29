@@ -111,9 +111,6 @@ header nav a {
 header nav a:hover {
     text-decoration: 3px underline var(--color3);
 }
-header img {
-    
-}
 
 
 /*main*/

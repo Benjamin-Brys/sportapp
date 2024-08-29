@@ -1,6 +1,8 @@
 import { MongoClient, Collection } from "mongodb";
 import dotenv from "dotenv";
 import chalk from 'chalk';
+import { Teams } from "./interfaces";
+
 dotenv.config();
 
 const uri = process.env.MONGO_URI ?? "mongodb://localhost:27017";
@@ -8,7 +10,7 @@ const client = new MongoClient(uri);
   
 async function ABC() {
     try {
-        const result = await fetch(`https://api.football-data.org/v4/areas/`, {
+        const result = await fetch(`https://api.football-data.org/v4/competitions/`, {
             headers: {'X-Auth-Token': '0a57c6f9ba31492383865d39d1c3c602' }
         });
 
@@ -25,6 +27,20 @@ async function ABC() {
         console.log(`Document toegevoegd met _id: ${insertResult.insertedIds}`);
     } catch (error) {
         console.error("fout:", error);
+    }
+}
+
+export async function fetchTeams(team: any) {
+    try {
+        const result = await client.db("Football").collection("Areas").find().toArray();
+
+        const teams: Teams[] = result.map((team: any) => ({
+            name: team.name,
+            crest: team.crest
+        }));
+        return teams;
+    } catch (error) {
+        console.log(chalk.red("fout =>", error));
     }
 }
 
